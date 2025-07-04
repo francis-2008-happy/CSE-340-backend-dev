@@ -14,3 +14,9 @@ node_modules
 
 # .DS_Store is only for Mac users
 **/.DS_Store
+
+
+#readme files are not necessary to upload to github
+# but you can if you want to.
+README.md
+
