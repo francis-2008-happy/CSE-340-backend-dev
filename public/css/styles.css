@@ -127,12 +127,151 @@
 }
 
 
-/* Desktop view */
+/* Desktop view (min-width: 768px) */
+@media screen and (min-width: 768px) {
 
 body {
-  background-image: url('/images/background.jpg'); 
+  background-image: url('/images/site/small_check.jpg'); 
   background-size: cover; 
   background-repeat: repeat; 
   background-position: center;
   padding: 20px;
+}
+
+/* .desktop_container {
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto;
+  padding: 10px;
+  
+} */
+
+#wrapper {
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto;
+  padding: 10px;
+  border-radius: 10px;
+  border: 5px solid blue;
+  
+}
+  .car {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px;
+  }
+
+  .car-text {
+
+    position: absolute;
+    top: 50px;
+    left: 20%;
+    transform: translateX(-50%);
+    color: rgb(2, 23, 63);
+    background: rgba(255, 255, 255, 0.7);
+    padding: 4px 8px;
+    border-radius: 6px;
+    line-height: 1;
+    font-weight: bold;
+    font-size: 1.5rem;
+    z-index: 2;
+  }
+
+ 
+
+  .car-text .today {
+    display: inline-block;
+    background-color: aqua;
+    padding: 10px 20px;
+    margin-top: 10px;
+    font-weight: bold;
+  }
+
+  .car-image {
+    width: 40%;
+    height: auto;
+    margin-right: 50rem;
+  }
+
+  .upgrades,
+  .dmc {
+    padding: 20px 40px;
+  }
+
+
+  /* .upgrades,
+  .dmc {
+    display: grid;
+    vertical-align: top;
+    width: 48%;
+  }
+
+  .upgrades {
+    text-align: left;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .dmc {
+    margin-left: 4%;
+  }
+
+  .dmc h2,
+  .upgrades h2 {
+    font-size: 1.5rem;
+  } */
+
+  /* .upgrades figure {
+    background-color: aqua;
+    padding: 50px;
+  }
+
+  .upgrades figure img {
+    max-width: 100%;
+  } */
+
+  .upgrades figure{
+   
+    align-items: center;
+    text-align: center;
+    margin: 0;
+    padding: 30px;
+  }
+  
+  .upgrades figure img {
+    background-color: aqua;
+    align-items: center;
+    padding: 30px;
+  
+  }
+  
+  .upgrades figure figcaption{
+    background-color: white;
+    padding: 5px auto;
+    
+  
+  }
+  
+  .upgrades figure figcaption a {
+    /* color: inherit; */
+    text-decoration: underline;
+  }
+
+  .main-nav ul {
+    gap: 200px;
+    font-weight: bold;
+  }
+  
+  .parent-container {
+    display: flex;
+    justify-content: space-between;           
+    flex-direction: row-reverse; 
+    gap: 10px;             
+  }
+
+  /* .copyright{
+  } */
+
+
+
 }
