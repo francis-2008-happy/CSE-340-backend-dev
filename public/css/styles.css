@@ -42,7 +42,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 50px;
+  gap: 40px;
 }
 .main-nav li {
   color: #fff;
@@ -135,7 +135,9 @@ body {
   background-size: cover; 
   background-repeat: repeat; 
   background-position: center;
-  padding: 20px;
+  margin: 0;
+  padding: 0;
+  /* padding: 20px; */
 }
 
 /* .desktop_container {
@@ -149,12 +151,25 @@ body {
 #wrapper {
   background-color: #fff;
   width: 80%;
+  /* min-height: 100vh; */
   margin: 0 auto;
   padding: 10px;
   border-radius: 10px;
   border: 5px solid blue;
+  /* display: flex;
+  flex-direction: column;  */
   
 }
+/* main {
+  flex: 1;
+} */
+
+/* #wrapper footer,
+#wrapper footer p {
+  margin: 0;
+  padding: 0.5em 0;
+} */
+
   .car {
     display: flex;
     align-items: center;
