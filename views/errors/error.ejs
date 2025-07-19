@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>aa
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main class="error-container">
+    <h1><%= title %></h1>
+    <!-- Display the error message (unescaped to allow HTML if needed) -->
+    <div class="error-message">
+      <%- message %>
+    </div>
+    <!-- Fun 404-like humor -->
+    <div class="error-humor">
+      <p>🚗💨 <em>Whoops! Our server took a detour.</em></p>
+      <p><a href="/">Navigate back home</a> before we get lost!</p>
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+</body>
+</html>
