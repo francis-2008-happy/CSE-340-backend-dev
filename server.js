@@ -15,6 +15,8 @@ const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities/")
 const session = require("express-session")
 const pool = require('./database/')
+const accountRoute  = require("./routes/accountRoute")
+
 
 // const baseController = require("./controllers/baseController")
 
@@ -55,9 +57,11 @@ app.set("layout", "./layouts/layout") // not at views root
  *************************/
 app.use(static)
 
+// Account routes
+app.use("/account", accountRoute)
 
 // Inventory routes
-app.use("/inv", inventoryRoute)
+app.use("/inv", inventoryRoute)           
 
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
