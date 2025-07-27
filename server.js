@@ -17,6 +17,7 @@ const session = require("express-session")
 const flash = require("connect-flash")
 const pool = require('./database/')
 const accountRoute  = require("./routes/accountRoute")
+const bodyParser = require("body-parser")
 
 
 // const baseController = require("./controllers/baseController")
@@ -43,6 +44,9 @@ app.use(function(req, res, next){
   next()
 })
 
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 
 
 /* ***********************

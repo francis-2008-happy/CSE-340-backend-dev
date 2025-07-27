@@ -7,6 +7,14 @@
 <div class="page-container">
     <h1 class="page-title"><%= title %></h1>
 
+    <% if (errors) { %>
+        <ul class="notice">
+            <% errors.array().forEach(error => { %>
+                <li><%= error.msg %></li>
+            <% }) %>
+        </ul>
+    <% } %>
+
     <% /* Flash message display */ %>
     <% if (messages && messages.length > 0) { %>
         <div class="flash-message" role="alert">

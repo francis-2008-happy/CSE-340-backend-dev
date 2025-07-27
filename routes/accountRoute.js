@@ -2,7 +2,8 @@
 const express = require("express")
 const router = new express.Router()
 const utilities = require("../utilities/") 
-const accountController = require("../controllers/accountController") // This will be created later
+const accountController = require("../controllers/accountController")
+const regValidate = require("../utilities/account-validation")
 
 // Route to build the account management view
 // This route will be triggered when the "My Account" link is clicked
@@ -22,6 +23,10 @@ router.get("/register", utilities.handleErrors(accountController.buildRegistrati
 
 
 // Route to process the registration attempt (you'll create registerAccount in the controller)
-router.post("/register", utilities.handleErrors(accountController.registerAccount));
+router.post("/register",
+  regValidate.registationRules(),
+  regValidate.checkRegData,
+  utilities.handleErrors(accountController.registerAccount)
+);
 
 module.exports = router;
