@@ -8,6 +8,15 @@
         <%- include ('../partials/navigation') %>
 
         <main>
+            <% if (messages.notice) { %>
+                <div class="flash notice"><p><%= messages.notice %></p></div>
+            <% } %>
+            <% if (messages.error) { %>
+                <div class="flash error"><p><%= messages.error %></p></div>
+            <% } %>
+            <% if (messages.success) { %>
+                <div class="flash success"><p><%= messages.success %></p></div>
+            <% } %>
             <%- body %>
         </main>
 

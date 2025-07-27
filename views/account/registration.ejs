@@ -1,0 +1,91 @@
+<% /* views/account/registration.ejs */ %>
+
+<% /* Set the title dynamically from controller data */ %>
+<% title = title || "Register" %> <% /* Default title if not provided */ %>
+<%- contentFor('body') %>
+
+<div class="page-container">
+    <h1 class="page-title"><%= title %></h1>
+
+    <% /* Flash message display */ %>
+    <% if (messages && messages.length > 0) { %>
+        <div class="flash-message" role="alert">
+            <% messages.forEach(function(message){ %>
+                <p><%= message %></p>
+            <% }) %>
+        </div>
+    <% } %>
+
+    <div class="form-card">
+        <form action="/account/register" method="POST" class="registration-form">
+            <div class="form-group">
+                <label for="accountFirstName" class="form-label">First Name</label>
+                <input type="text" id="accountFirstName" name="account_firstname" required
+                       class="form-input"
+                       placeholder="Enter your first name"
+                       value="<%= locals.account_firstname ? locals.account_firstname : '' %>">
+            </div>
+
+            <div class="form-group">
+                <label for="accountLastName" class="form-label">Last Name</label>
+                <input type="text" id="accountLastName" name="account_lastname" required
+                       class="form-input"
+                       placeholder="Enter your last name"
+                       value="<%= locals.account_lastname ? locals.account_lastname : '' %>">
+            </div>
+
+            <div class="form-group">
+                <label for="accountEmail" class="form-label">Email Address</label>
+                <input type="email" id="accountEmail" name="account_email" required
+                       class="form-input"
+                       placeholder="Enter your email"
+                       value="<%= locals.account_email ? locals.account_email : '' %>">
+            </div>
+
+            <div class="form-group">
+                <label for="accountPassword" class="form-label">Password</label>
+                <div class="password-input-wrapper">
+                    <input type="password" id="accountPassword" name="account_password" required
+                           class="form-input password-field"
+                           placeholder="Create a password">
+                    <button type="button" id="togglePassword" class="password-toggle-btn">
+                        <svg class="password-toggle-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
+                    </button>
+                </div>
+                <p class="password-requirements">
+                    Passwords must be at least 12 characters and contain at least 1 capital letter, 1 number, and 1 special character.
+                </p>
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+                Register
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    // JavaScript for password toggle functionality (remains the same)
+    document.addEventListener('DOMContentLoaded', function() {
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('accountPassword');
+
+        if (togglePassword && passwordInput) {
+            togglePassword.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Update SVG icon
+                const iconContainer = this.querySelector('.password-toggle-icon');
+                if (iconContainer) {
+                    iconContainer.innerHTML = type === 'password' ?
+                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />' :
+                        '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.542-7 .983-3.12 3.522-5.636 6.5-6.996m2.5-1.5a3 3 0 11-6 0 3 3 0 016 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12c-1.274 4.057-5.064 7-9.542 7-1.274 0-2.494-.207-3.645-.584M3 3l18 18" />';
+                }
+            });
+        }
+    });
+</script>

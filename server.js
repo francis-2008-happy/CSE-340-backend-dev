@@ -14,6 +14,7 @@ const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities/")
 const session = require("express-session")
+const flash = require("connect-flash")
 const pool = require('./database/')
 const accountRoute  = require("./routes/accountRoute")
 
@@ -36,9 +37,9 @@ const accountRoute  = require("./routes/accountRoute")
 
 
 // Express Messages Middleware
-app.use(require('connect-flash')())
+app.use(flash())
 app.use(function(req, res, next){
-  res.locals.messages = require('express-messages')(req, res)
+  res.locals.messages = req.flash()
   next()
 })
 
