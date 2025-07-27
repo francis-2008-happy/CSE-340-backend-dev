@@ -14,3 +14,20 @@ async function buildLogin(req, res, next) {
 }
 
 module.exports = { buildLogin }
+
+// controllers/accountController.js
+// const accountController = {}
+
+/* *****************************************
+ * Deliver login view
+ * ***************************************** */
+accountController.buildLogin = async function (req, res, next) {
+  res.render("account/login", {
+    title: "Login",
+    nav: await utilities.getNav(), 
+    messages: req.flash('notice') 
+  })
+}
+
+
+module.exports = accountController;
