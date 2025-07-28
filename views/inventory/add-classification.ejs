@@ -1,8 +1,9 @@
 <%# views/inventory/add-classification.ejs %>
 
-<h1>Add New Classification</h1>
+<h1><%- title %></h1>
 
-<%- messages() %>
+<%# Display Flash Messages %>
+<% if (messages.notice) { %><div class="notice"><p><%= messages.notice %></p></div><% } else if (messages.error) { %><div class="notice error"><p><%= messages.error %></p></div><% } %>
 
 <% if (errors) { %>
   <ul class="notice">
@@ -15,8 +16,8 @@
 <form id="addClassificationForm" action="/inv/add-classification" method="post">
   <fieldset>
     <label for="classification_name">Classification Name:</label>
+    <p>Name must be alphabetic characters only.</p>
     <input type="text" name="classification_name" id="classification_name" required pattern="^[a-zA-Z]+$">
-    <span>Name must be alphabetic characters only.</span>
     <button type="submit">Add Classification</button>
   </fieldset>
 </form>

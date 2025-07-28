@@ -30,20 +30,41 @@ router.get("/add-classification", utilities.handleErrors(invController.buildAddC
 // Route to process the new classification data
 router.post(
   "/add-classification",
-  validate.classificationRules(),
+  validate.addClassificationRules(),
   validate.checkClassificationData,
   utilities.handleErrors(invController.addClassification)
 );
+
+
+
+
+// router.post(
+//   "/add-classification",
+//   validate.classificationRules(),
+//   validate.checkClassificationData,
+//   utilities.handleErrors(invController.addClassification)
+// );
 
 // Route to build the add-inventory view
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventoryView));
 
 // Route to process the new inventory data
+// Process the new inventory data
 router.post(
   "/add-inventory",
-  validate.inventoryRules(),
+  validate.addInventoryRules(),
   validate.checkInventoryData,
   utilities.handleErrors(invController.addInventory)
 );
+
+
+
+
+// router.post(
+//   "/add-inventory",
+//   validate.inventoryRules(),
+//   validate.checkInventoryData,
+//   utilities.handleErrors(invController.addInventory)
+// );
 
 module.exports = router;
