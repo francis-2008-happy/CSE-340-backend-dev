@@ -1,0 +1,32 @@
+<h1>Add New Vehicle</h1>
+
+<%- messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<form id="addInventoryForm" action="/inv/add-inventory" method="post">
+  <fieldset>
+    <label for="classificationList">Classification:</label>
+    <%- classificationList %>
+
+    <label for="inv_make">Make:</label>
+    <input type="text" name="inv_make" id="inv_make" required value="<%= locals.inv_make || '' %>">
+
+    <label for="inv_model">Model:</label>
+    <input type="text" name="inv_model" id="inv_model" required value="<%= locals.inv_model || '' %>">
+
+    <label for="inv_year">Year:</label>
+    <input type="number" name="inv_year" id="inv_year" required value="<%= locals.inv_year || '' %>">
+
+    <label for="inv_description">Description:</label>
+    <textarea name="inv_description" id="inv_description" required><%= locals.inv_description || '' %></textarea>
+
+    <button type="submit">Add Vehicle</button>
+  </fieldset>
+</form>
