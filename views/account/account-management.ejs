@@ -1,0 +1,37 @@
+<% /* views/account/login.ejs */ %>
+
+<% /* Set the title dynamicallly from controller data */ %>
+<% title = title || "Login" %> <% /* Default title if not provided */ %>
+<%- contentFor('body') %>
+
+<div class="container mx-auto p-4 md:p-8">
+    <h1 class="text-3xl font-bold mb-6 text-center"><%= title %></h1>
+
+    <% /* Flash message display */ %>
+    <% if (messages && messages.length > 0) { %>
+        <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-6 rounded-md shadow-sm" role="alert">
+            <% messages.forEach(function(message){ %>
+                <p><%= message %></p>
+            <% }) %>
+        </div>
+    <% } %>
+
+    <%# Main content for the view %>
+    <h2><%- welcomeMessage %></h2>
+    <p>Welome to the Account Mangement System. Use this page to manage your account details.</p>
+
+    <div class="account-actions">
+        <h3>Account Management</h3>
+        <ul>
+            <li>
+            If you are an administrator or employee, you have access to the 
+            <a href="/inv/"> vehicle management</a> area.
+            </li>
+        </ul>
+    </div>
+
+</div>
+
+
+
+

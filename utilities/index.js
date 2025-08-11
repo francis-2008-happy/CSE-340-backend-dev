@@ -1,5 +1,7 @@
-const invModel = require("../models/inventory-model")
-const Util = {}
+const invModel = require("../models/inventory-model");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
+const Util = {};
 // console.log(data)
 /* ************************
  * Constructs the nav HTML unordered list
@@ -106,6 +108,47 @@ Util.buildClassificationList = async function (classification_id = null) {
   classificationList += "</select>";
   return classificationList;
 };
+
+
+/* ****************************************
+ * Middleware to check token validity
+ **************************************** */
+Util.checkJWT = async (req, res, next) => {
+  console.log("checkJWT called");
+  console.log("ACCESS_TOKEN_SECRET:", process.env.ACCESS_TOKEN_SECRET);
+  if (req.cookies.jwt) {
+    console.log("JWT found:", req.cookies.jwt);
+    try {
+      const accountData = await new Promise((resolve, reject) => {
+        jwt.verify(
+          req.cookies.jwt,
+          process.env.ACCESS_TOKEN_SECRET,
+          (err, decoded) => {
+            if (err) {
+              reject(err);
+            } else {
+              resolve(decoded);
+            }
+          }
+        );
+      });
+      console.log("JWT verified, accountData:", accountData);
+      res.locals.accountData = accountData;
+      res.locals.loggedin = 1;
+      console.log("res.locals.loggedin set to 1");
+      next();
+    } catch (err) {
+      console.log("JWT verification error:", err);
+      req.flash("Please log in");
+      res.clearCookie("jwt");
+      return res.redirect("/account/login");
+    }
+  } else {
+    console.log("No JWT found");
+    next();
+  }
+};
+
 
 
 module.exports = Util;

@@ -1,66 +1,70 @@
-const utilities = require("../utilities/")
-const accountModel = require("../models/account-model")
-const bcrypt = require("bcryptjs")
-const accountController = {}
+const utilities = require("../utilities/");
+const accountModel = require("../models/account-model");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 /* ****************************************
-*  Deliver login view
-* *************************************** */
-accountController.buildLogin = async function (req, res, next) {
-  let nav = await utilities.getNav()
+ * Build Account Management View
+ * *************************************** */
+async function buildAccountManagement(req, res, next) {
+  let nav = await utilities.getNav();
+  const welcomeMessage = `Welcome ${res.locals.accountData.account_firstname}`;
+  res.render("account/account-management", {
+    title: "Account Management",
+    nav,
+    welcomeMessage,
+    errors: null,
+  });
+}
+
+/* ****************************************
+ * Deliver login view
+ * *************************************** */
+async function buildLogin(req, res, next) {
+  let nav = await utilities.getNav();
   res.render("account/login", {
     title: "Login",
     nav,
     errors: null,
-  })
+  });
 }
 
 /* *****************************************
  * Deliver registration view
  * ***************************************** */
-accountController.buildRegistration = async function (req, res, next) {
-  let nav = await utilities.getNav()
+async function buildRegistration(req, res, next) {
+  let nav = await utilities.getNav();
   res.render("account/registration", {
     title: "Register",
     nav,
     errors: null,
-  })
+  });
 }
 
 /* ****************************************
-*  Process Registration
-* *************************************** */
-const { validationResult } = require("express-validator")
-
-accountController.registerAccount = async function (req, res) {
-  let nav = await utilities.getNav()
-  const { account_firstname, account_lastname, account_email, account_password } = req.body
-
-  let errors = validationResult(req)
-  if (!errors.isEmpty()) {
-    res.render("account/registration", {
-      errors,
-      title: "Registration",
-      nav,
-      account_firstname,
-      account_lastname,
-      account_email,
-    })
-    return
-  }
+ * Process Registration
+ * *************************************** */
+async function registerAccount(req, res) {
+  let nav = await utilities.getNav();
+  const {
+    account_firstname,
+    account_lastname,
+    account_email,
+    account_password,
+  } = req.body;
 
   // Hash the password before storing
-  let hashedPassword
+  let hashedPassword;
   try {
-    // regular password and cost (salt is generated automatically)
-    hashedPassword = await bcrypt.hashSync(account_password, 10)
+    hashedPassword = await bcrypt.hash(account_password, 10);
   } catch (error) {
-    req.flash("notice", 'Sorry, there was an error processing the registration.')
-    res.status(500).render("account/register", {
+    req.flash("notice", "Sorry, there was an error processing the registration.");
+    res.status(500).render("account/registration", {
       title: "Registration",
       nav,
       errors: null,
-    })
+    });
   }
 
   const regResult = await accountModel.registerAccount(
@@ -68,35 +72,94 @@ accountController.registerAccount = async function (req, res) {
     account_lastname,
     account_email,
     hashedPassword
-  )
+  );
 
   if (regResult) {
     req.flash(
       "notice",
-      `Congratulations, you\'re registered ${account_firstname}. Please log in.`
-    )
+      `Congratulations, you're registered ${account_firstname}. Please log in.`
+    );
     res.status(201).render("account/login", {
       title: "Login",
       nav,
-    })
+      errors: null,
+    });
   } else {
-    req.flash("notice", "Sorry, the registration failed.")
+    req.flash("notice", "Sorry, the registration failed.");
     res.status(501).render("account/registration", {
       title: "Registration",
       nav,
-      account_firstname,
-      account_lastname,
-      account_email,
-    })
+    });
   }
 }
 
-accountController.accountLogin = async function (req, res, next) {
-  // Placeholder for login logic
-  req.flash("notice", "Login functionality is not yet implemented.")
-  res.redirect("/account/login") // Redirect back to login for now
+/* ****************************************
+ * Process login request
+ * ************************************ */
+async function accountLogin(req, res, next) {
+  let nav = await utilities.getNav();
+  const { account_email, account_password } = req.body;
+  const accountData = await accountModel.getAccountByEmail(account_email);
+  if (!accountData) {
+    req.flash("notice", "Please check your credentials and try again.");
+    res.status(400).render("account/login", {
+      title: "Login",
+      nav,
+      errors: null,
+      account_email,
+    });
+    return;
+  }
+  try {
+    if (await bcrypt.compare(account_password, accountData.account_password)) {
+      delete accountData.account_password;
+      const accessToken = jwt.sign(
+        accountData,
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: 3600 * 1000 }
+      );
+      console.log("Generated accessToken:", accessToken);
+      console.log("ACCESS_TOKEN_SECRET used for signing:", process.env.ACCESS_TOKEN_SECRET);
+      if (process.env.NODE_ENV === "development") {
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
+      } else {
+        res.cookie("jwt", accessToken, {
+          httpOnly: true,
+          secure: true,
+          maxAge: 3600 * 1000,
+        });
+      }
+      return res.redirect("/account/");
+    } else {
+      req.flash("notice", "Please check your credentials and try again.");
+      res.status(400).render("account/login", {
+        title: "Login",
+        nav,
+        errors: null,
+        account_email,
+      });
+    }
+  } catch (error) {
+    return next(new Error("Access Forbidden"));
+  }
 }
 
+// Export all functions
+module.exports = {
+  buildLogin,
+  buildRegistration,
+  registerAccount,
+  accountLogin,
+  buildAccountManagement,
+};
 
 
-module.exports = accountController;
+
+
+
+
+
+
+
+
+
