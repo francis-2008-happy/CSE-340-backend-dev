@@ -345,6 +345,71 @@
 }
 
 
+.manage {
+    color: #2c3e50;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.choose {
+    color: #7f8c8d;
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+}
+
+select {
+    width: 100%;
+    max-width: 400px;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    background-color: #fff;
+    cursor: pointer;
+}
+
+select:focus {
+    outline: none;
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+#inventoryDisplay {
+    width: 100%;
+    max-width: 900px;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #ecf0f1;
+}
+
+#inventoryDisplay th {
+    background-color: #34495e;
+    color: #ecf0f1;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+#inventoryDisplay tr:last-child td {
+    border-bottom: none;
+}
+
+#inventoryDisplay tbody tr:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+}
+
+
 
 /* Desktop view (min-width: 768px) */
 @media screen and (min-width: 768px) {

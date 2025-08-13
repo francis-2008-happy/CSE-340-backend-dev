@@ -23,6 +23,7 @@ router.get("/error", utilities.handleErrors(invController.triggerError));
 router.get(
   "/",
   utilities.checkLogin,
+  utilities.checkAuthorization,
   utilities.handleErrors(invController.buildManagementView)
 );
 
@@ -32,6 +33,7 @@ router.get(
 router.get(
   "/add-classification",
   utilities.checkLogin,
+  utilities.checkAuthorization,
   utilities.handleErrors(invController.buildAddClassificationView)
 );
 
@@ -39,6 +41,7 @@ router.get(
 router.post(
   "/add-classification",
   utilities.checkLogin,
+  utilities.checkAuthorization,
   validate.addClassificationRules(),
   validate.checkClassificationData,
   utilities.handleErrors(invController.addClassification)
@@ -58,6 +61,7 @@ router.post(
 router.get(
   "/add-inventory",
   utilities.checkLogin,
+  utilities.checkAuthorization,
   utilities.handleErrors(invController.buildAddInventoryView)
 );
 
@@ -66,6 +70,7 @@ router.get(
 router.post(
   "/add-inventory",
   utilities.checkLogin,
+  utilities.checkAuthorization,
   validate.addInventoryRules(),
   validate.checkInventoryData,
   utilities.handleErrors(invController.addInventory)
@@ -80,6 +85,7 @@ router.get("/getInventory/:classification_id", utilities.handleErrors(invControl
 router.get(
   "/edit/:inv_id",
   utilities.checkLogin,
+  utilities.checkAuthorization,
   utilities.handleErrors(invController.editInventoryView)
 );
 
@@ -87,6 +93,7 @@ router.get(
 router.post(
   "/update/",
   utilities.checkLogin,
+  utilities.checkAuthorization,
   validate.addInventoryRules(),
   validate.checkUpdateData,
   utilities.handleErrors(invController.updateInventory)
