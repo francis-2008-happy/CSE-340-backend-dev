@@ -20,16 +20,25 @@ router.get("/error", utilities.handleErrors(invController.triggerError));
 
 
 // Route to build the inventory management view
-router.get("/", utilities.handleErrors(invController.buildManagementView));
+router.get(
+  "/",
+  utilities.checkLogin,
+  utilities.handleErrors(invController.buildManagementView)
+);
 
 
 
 // Route to build the add-classification view
-router.get("/add-classification", utilities.handleErrors(invController.buildAddClassificationView));
+router.get(
+  "/add-classification",
+  utilities.checkLogin,
+  utilities.handleErrors(invController.buildAddClassificationView)
+);
 
 // Route to process the new classification data
 router.post(
   "/add-classification",
+  utilities.checkLogin,
   validate.addClassificationRules(),
   validate.checkClassificationData,
   utilities.handleErrors(invController.addClassification)
@@ -46,25 +55,42 @@ router.post(
 // );
 
 // Route to build the add-inventory view
-router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventoryView));
+router.get(
+  "/add-inventory",
+  utilities.checkLogin,
+  utilities.handleErrors(invController.buildAddInventoryView)
+);
 
 // Route to process the new inventory data
 // Process the new inventory data
 router.post(
   "/add-inventory",
+  utilities.checkLogin,
   validate.addInventoryRules(),
   validate.checkInventoryData,
   utilities.handleErrors(invController.addInventory)
 );
 
 
+// A new route to get inventory items by classification_id
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON));
 
 
-// router.post(
-//   "/add-inventory",
-//   validate.inventoryRules(),
-//   validate.checkInventoryData,
-//   utilities.handleErrors(invController.addInventory)
-// );
+// Route to build the edit inventory view
+router.get(
+  "/edit/:inv_id",
+  utilities.checkLogin,
+  utilities.handleErrors(invController.editInventoryView)
+);
+
+// Process the updated inventory data
+router.post(
+  "/update/",
+  utilities.checkLogin,
+  validate.addInventoryRules(),
+  validate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+);
+
 
 module.exports = router;

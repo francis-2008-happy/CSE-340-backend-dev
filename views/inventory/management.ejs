@@ -1,26 +1,30 @@
-<%# views/inventory/management.ejs %>
-
+<%# Content for the management view %>
 <h1><%- title %></h1>
 
-<%# Display Flash Messages %>
-<% if (messages.notice) { %><div class="notice"><p><%= messages.notice %></p></div><% } else if (messages.error) { %><div class="notice error"><p><%= messages.error %></p></div><% } %>
-
-<% if (errors) { %>
+<% if (locals.messages && Object.keys(locals.messages).length) { %>
   <ul class="notice">
- <% errors.array().forEach(error => { %>
-   <li><%= error.msg %></li>
-<%  }) %>
- </ul>
+    <% Object.keys(locals.messages).forEach(type => { %>
+      <% locals.messages[type].forEach(message => { %>
+        <li class="<%= type %>"><%- message %></li>
+      <% }) %>
+    <% }) %>
+  </ul>
 <% } %>
 
-<div class="management-links">
-    <a href="/inv/add-classification">Add New Classification</a>
-    <a href="/inv/add-inventory">Add New Vehicle</a>
+<div class="management-container">
+    <div class="management-links">
+        <a href="/inv/add-classification">Add New Classification</a>
+        <a href="/inv/add-inventory">Add New Inventory</a>
+    </div>
+
+    <hr>
+
+    <h2>Manage Inventory</h2>
+    <p>Choose a classification from the list to see the items.</p>
+    
+    <%- classificationList %>
+
+    <table id="inventoryDisplay"></table>
 </div>
 
-
-
-
-
-
-
+<script src="/js/inventory.js"></script>
