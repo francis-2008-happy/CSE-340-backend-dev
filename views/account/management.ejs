@@ -1,25 +1,27 @@
-<%# The title is set in the controller %>
-<h1><%= title %></h1>
+<div class="page-container">
+  <h1 class="page-title"><%= title %></h1>
 
-<%# Display any messages passed through connect-flash %>
-<% if (messages.notice) { %><div class="notice"><p><%= messages.notice %></p></div><% } else if (messages.error) { %><div class="notice error"><p><%= messages.error %></p></div><% } %>
+  <% if (messages.notice) { %><div class="notice"><p><%= messages.notice %></p></div><% } else if (messages.error) { %><div class="notice error"><p><%= messages.error %></p></div><% } %>
 
-<% if (errors) { %>
+  <% if (errors) { %>
     <ul class="notice">
-   <% errors.array().forEach(error => { %>
-     <li><%= error.msg %></li>
-  <%  }) %>
-   </ul>
-<% } %>
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <%  }) %>
+    </ul>
+  <% } %>
 
-<h2>Welcome <%= locals.accountData.account_firstname %></h2>
+  <div class="form-card">
+    <h2>Welcome <%= locals.accountData.account_firstname %></h2>
+    <p>You're logged in.</p>
+    <a href="/account/update/<%= locals.accountData.account_id %>" class="btn btn-primary">Update Account Information</a>
+  </div>
 
-<p>You're logged in.</p>
-
-<p><a href="/account/update/<%= locals.accountData.account_id %>">Update Account Information</a></p>
-
-<% if (locals.accountData.account_type === 'Employee' || locals.accountData.account_type === 'Admin') { %>
-    <h3>Inventory Management</h3>
-    <p>Use the link below to manage the inventory.</p>
-    <p><a href="/inv/">Manage Inventory</a></p>
-<% } %>
+  <% if (locals.accountData.account_type === 'Employee' || locals.accountData.account_type === 'Admin') { %>
+    <div class="form-card">
+      <h3>Inventory Management</h3>
+      <p>Use the link below to manage the inventory.</p>
+      <a href="/inv/" class="btn btn-primary">Manage Inventory</a>
+    </div>
+  <% } %>
+</div>

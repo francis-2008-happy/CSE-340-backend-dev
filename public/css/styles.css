@@ -217,6 +217,11 @@
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); /* Equivalent to shadow-lg */
 }
 
+.form-card a {
+    color: #ffffff; /* Equivalent to text-blue-500 */
+
+}
+
 /* --- Registration Form --- */
 .registration-form {
     display: flex;
@@ -312,12 +317,15 @@
 }
 
 .btn-primary {
-    background-color: #3b82f6; /* Equivalent to bg-blue-500 */
+    background-color: #eaedf3; /* Equivalent to bg-blue-500 */
     color: #fff; /* Equivalent to text-white */
+    text-decoration: none;
 }
 
+
+
 .btn-primary:hover {
-    background-color: #2563eb; /* Equivalent to hover:bg-blue-700 */
+    background-color: #f2f20d; /* Equivalent to hover:bg-blue-700 */
     transform: translateY(-2px); /* Slight lift effect on hover */
 }
 
