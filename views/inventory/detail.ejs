@@ -3,4 +3,33 @@
 <%# The 'grid' variable is passed from the controller and contains the HTML for the detail view %>
 <%- grid %>
 
+<div class="reviews">
+  <h2>Reviews</h2>
+  <% if (reviews && reviews.length > 0) { %>
+    <ul>
+      <% reviews.forEach(review => { %>
+        <li>
+          <p><strong><%= review.account_firstname %> <%= review.account_lastname %></strong> on <%= new Date(review.review_date).toLocaleString() %></p>
+          <p><%= review.review_text %></p>
+        </li>
+      <% }) %>
+    </ul>
+  <% } else { %>
+    <p>Be the first to write a review!</p>
+  <% } %>
+</div>
+
+<% if (locals.loggedin) { %>
+  <div class="add-review">
+    <h2>Add a Review</h2>
+    <form action="/review/add" method="post">
+      <input type="hidden" name="inv_id" value="<%= inv_id %>">
+      <textarea name="review_text" required></textarea>
+      <button type="submit">Submit Review</button>
+    </form>
+  </div>
+<% } else { %>
+  <p>Please <a href="/account/login">log in</a> to write a review.</p>
+<% } %>
+
 

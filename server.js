@@ -12,6 +12,7 @@ const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const reviewRoute = require("./routes/reviewRoute")
 const utilities = require("./utilities/")
 const session = require("express-session")
 const flash = require("connect-flash")
@@ -69,7 +70,10 @@ app.use(static)
 app.use("/account", accountRoute)
 
 // Inventory routes
-app.use("/inv", inventoryRoute)           
+app.use("/inv", inventoryRoute)
+
+// Review routes
+app.use("/review", reviewRoute)
 
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
