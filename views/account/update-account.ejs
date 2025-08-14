@@ -2,7 +2,7 @@
 <h1><%= title %></h1>
 
 <%# Display any messages passed through connect-flash %>
-<%- messages() %>
+<% if (messages.notice) { %><div class="notice"><p><%= messages.notice %></p></div><% } else if (messages.error) { %><div class="notice error"><p><%= messages.error %></p></div><% } %>
 
 <% if (errors) { %>
     <ul class="notice">

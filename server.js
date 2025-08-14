@@ -32,8 +32,7 @@ const cookieParser = require("cookie-parser")
     pool,
   }),
   secret: process.env.SESSION_SECRET,
-  resave: true,
-  saveUninitialized: true,
+  resave: true, saveUninitialized: true,
   name: 'sessionId',
 }))
 
@@ -49,7 +48,7 @@ app.use(function(req, res, next){
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
 app.use(cookieParser()) // for parsing cookies
-app.use(utilities.checkJWTToken) // Use one JWT check middleware, not both
+app.use(utilities.checkJWT) // Use one JWT check middleware, not both
 
 
 
