@@ -1,5 +1,6 @@
 const utilities = require("../utilities/");
 const accountModel = require("../models/account-model");
+const passwordHistoryModel = require("../models/password-history-model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -212,6 +213,9 @@ async function updatePassword(req, res, next) {
   let nav = await utilities.getNav()
   const { account_password, account_id } = req.body
 
+  // Get current account data
+  const accountData = await accountModel.getAccountById(account_id)
+
   // Hash the password before storing
   let hashedPassword
   try {
@@ -233,6 +237,8 @@ async function updatePassword(req, res, next) {
   )
 
   if (updateResult) {
+    // Add password to history
+    await passwordHistoryModel.addPasswordHistory(account_id, accountData.account_password)
     req.flash("notice", "Congratulations, your password has been updated.")
     res.redirect("/account/")
   } else {
@@ -248,6 +254,21 @@ async function updatePassword(req, res, next) {
       account_id,
     })
   }
+}
+
+/* ****************************************
+ * Build Password History View
+ * *************************************** */
+async function buildPasswordHistoryView(req, res, next) {
+  let nav = await utilities.getNav();
+  const account_id = res.locals.accountData.account_id;
+  const history = await passwordHistoryModel.getPasswordHistory(account_id);
+  res.render("account/password-history", {
+    title: "Password Change History",
+    nav,
+    errors: null,
+    history,
+  });
 }
 
 /* ****************************************
@@ -269,4 +290,5 @@ module.exports = {
   updateAccountInfo,
   updatePassword,
   accountLogout,
+  buildPasswordHistoryView,
 };

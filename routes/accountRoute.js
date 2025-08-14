@@ -62,6 +62,13 @@ router.post(
   utilities.handleErrors(accountController.updatePassword)
 );
 
+// Route to build the password history view
+router.get(
+  "/password-history",
+  utilities.checkLogin,
+  utilities.handleErrors(accountController.buildPasswordHistoryView)
+);
+
 // Route to handle logout
 router.get("/logout", accountController.accountLogout);
 

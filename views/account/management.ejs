@@ -15,6 +15,8 @@
     <h2>Welcome <%= locals.accountData.account_firstname %></h2>
     <p>You're logged in.</p>
     <a href="/account/update/<%= locals.accountData.account_id %>" class="btn btn-primary">Update Account Information</a>
+    <br>
+    <a href="/account/password-history" class="btn btn-primary">Password Change History</a>
   </div>
 
   <% if (locals.accountData.account_type === 'Employee' || locals.accountData.account_type === 'Admin') { %>

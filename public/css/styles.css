@@ -320,6 +320,7 @@
     background-color: #eaedf3; /* Equivalent to bg-blue-500 */
     color: #fff; /* Equivalent to text-white */
     text-decoration: none;
+    margin-top: 2rem;
 }
 
 
